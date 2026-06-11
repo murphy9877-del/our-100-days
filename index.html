@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#FFF6EC">
+<title>小玉大王 💗 泡泡 · 我们的100天</title>
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=ZCOOL+KuaiLe&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap">
+<style>
+:root{
+  --cream:#FFF6EC;
+  --paper:#FFFDF8;
+  --pink:#FF8FAB;
+  --pink-deep:#E05780;
+  --butter:#FFD972;
+  --butter-soft:#FFE9B3;
+  --cocoa:#5C4033;
+  --cocoa-soft:#8A6F5F;
+  --mint:#A8D8B9;
+  --night:#231D4F;
+  --night-deep:#171233;
+  --star:#FFE9A0;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:'ZCOOL KuaiLe','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+  background:var(--cream);
+  background-image:radial-gradient(rgba(224,87,128,.10) 1.5px, transparent 1.5px);
+  background-size:22px 22px;
+  color:var(--cocoa);
+  overflow-x:hidden;
+  min-height:100vh;
+}
+::selection{background:var(--pink);color:#fff}
+
+/* ---------- 通用 ---------- */
+.hidden{display:none !important}
+.section{max-width:480px;margin:0 auto;padding:0 20px}
+.sticker{
+  display:inline-block;background:var(--butter);color:var(--cocoa);
+  border:3px solid #fff;border-radius:999px;padding:6px 16px;
+  font-size:15px;box-shadow:0 3px 0 rgba(92,64,51,.18);
+  transform:rotate(-2deg);
+}
+.btn{
+  display:inline-block;border:none;cursor:pointer;
+  font-family:inherit;font-size:19px;color:#fff;
+  background:var(--pink-deep);
+  padding:14px 34px;border-radius:999px;
+  box-shadow:0 5px 0 #b13c61, 0 8px 18px rgba(224,87,128,.35);
+  transition:transform .12s, box-shadow .12s;
+}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 #b13c61}
+.btn.ghost{background:#fff;color:var(--pink-deep);box-shadow:0 5px 0 rgba(224,87,128,.25)}
+
+/* ---------- 锁屏 ---------- */
+#lock{
+  position:fixed;inset:0;z-index:100;
+  background:var(--cream);
+  background-image:radial-gradient(rgba(224,87,128,.10) 1.5px, transparent 1.5px);
+  background-size:22px 22px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:14px;padding:24px;transition:opacity .6s, transform .6s;
+}
+#lock.open{opacity:0;transform:translateY(-30px);pointer-events:none}
+#lock .envelope{font-size:64px;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-10px) rotate(4deg)}}
+#lock h1{font-size:26px;letter-spacing:2px}
+#lock .hint{font-size:15px;color:var(--cocoa-soft)}
+.dots{display:flex;gap:16px;margin:10px 0 4px}
+.dot{
+  width:18px;height:18px;border-radius:50%;
+  border:3px solid var(--pink-deep);background:transparent;
+  transition:background .15s, transform .15s;
+}
+.dot.fill{background:var(--pink-deep);transform:scale(1.15)}
+.dots.shake{animation:shake .45s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-10px)}40%{transform:translateX(10px)}60%{transform:translateX(-7px)}80%{transform:translateX(7px)}}
+.pad{display:grid;grid-template-columns:repeat(3,76px);gap:14px;margin-top:8px}
+.key{
+  width:76px;height:76px;border-radius:50%;border:3px solid #fff;
+  background:var(--paper);color:var(--cocoa);font-family:inherit;font-size:28px;
+  box-shadow:0 4px 0 rgba(92,64,51,.15);cursor:pointer;
+  transition:transform .08s, background .08s;
+}
+.key:active{transform:scale(.9);background:var(--butter-soft)}
+.key.fn{font-size:22px;background:transparent;border-color:transparent;box-shadow:none}
+
+/* ---------- 开屏 ---------- */
+#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:18px;padding:40px 20px}
+#hero .names{font-size:34px;letter-spacing:1px}
+#hero .names .heart{display:inline-block;color:var(--pink-deep);animation:beat 1s ease-in-out infinite}
+@keyframes beat{0%,100%{transform:scale(1)}30%{transform:scale(1.35)}60%{transform:scale(1)}}
+.day-card{
+  background:var(--paper);border:3px dashed var(--pink);border-radius:24px;
+  padding:26px 38px;box-shadow:0 6px 0 rgba(224,87,128,.15);
+  transform:rotate(-1.5deg);
+}
+.day-card .label{font-size:16px;color:var(--cocoa-soft)}
+.day-card .num{font-size:88px;line-height:1.05;color:var(--pink-deep);text-shadow:3px 3px 0 var(--butter)}
+.day-card .unit{font-size:18px}
+#day100badge{font-size:17px;background:var(--pink);color:#fff;border-color:#fff;transform:rotate(2deg)}
+#hero .sub{font-size:15px;color:var(--cocoa-soft);max-width:300px;line-height:1.7}
+
+/* ---------- 故事流 ---------- */
+#story{padding:30px 0 60px}
+.step{opacity:0;transform:translateY(36px);transition:opacity .7s, transform .7s}
+.step.show{opacity:1;transform:translateY(0)}
+
+/* 问答卡 */
+.quiz{
+  background:var(--paper);border:3px solid var(--cocoa);border-radius:22px;
+  padding:22px 20px;margin:34px 0;position:relative;
+  box-shadow:6px 6px 0 var(--butter);
+}
+.quiz .tag{
+  position:absolute;top:-16px;left:18px;
+  background:var(--pink-deep);color:#fff;border:3px solid #fff;border-radius:999px;
+  padding:3px 14px;font-size:14px;transform:rotate(-3deg);
+  box-shadow:0 3px 0 rgba(92,64,51,.2);
+}
+.quiz h3{font-size:20px;line-height:1.55;margin:8px 0 16px}
+.quiz .opt{
+  display:block;width:100%;text-align:left;font-family:inherit;font-size:17px;color:var(--cocoa);
+  background:var(--cream);border:2.5px solid var(--cocoa-soft);border-radius:14px;
+  padding:13px 16px;margin-bottom:11px;cursor:pointer;transition:all .15s;
+}
+.opt:active{transform:scale(.97)}
+.opt.right{background:var(--mint);border-color:#4d8a63;animation:pop .4s}
+.opt.wrong{background:#FFD6DE;border-color:var(--pink-deep);animation:shake .4s}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+.quiz.done .opt{pointer-events:none;opacity:.55}
+.quiz.done .opt.right{opacity:1}
+.quiz .praise{display:none;margin-top:6px;font-size:16px;color:#3e7a55}
+.quiz.done .praise{display:block;animation:pop .5s}
+
+/* 章节 */
+.chapter{margin:46px 0}
+.ch-head{text-align:center;margin-bottom:22px}
+.ch-head .date{font-size:14px;color:var(--cocoa-soft);letter-spacing:2px}
+.ch-head h2{font-size:27px;margin-top:6px}
+.ch-head h2 .em{font-size:24px}
+.ch-text{
+  background:var(--paper);border-radius:18px;padding:18px 20px;
+  font-size:16.5px;line-height:2;box-shadow:0 4px 14px rgba(92,64,51,.08);
+  margin-bottom:20px;position:relative;
+}
+.ch-text::before{
+  content:"";position:absolute;top:-10px;left:50%;transform:translateX(-50%) rotate(-2deg);
+  width:90px;height:22px;border-radius:3px;
+  background:repeating-linear-gradient(45deg,rgba(255,143,171,.75) 0 8px,rgba(255,217,114,.75) 8px 16px);
+  opacity:.85;
+}
+.polaroid{
+  background:#fff;padding:12px 12px 14px;border-radius:6px;
+  box-shadow:0 8px 22px rgba(92,64,51,.16);
+  margin:24px auto;max-width:340px;position:relative;
+}
+.polaroid img{width:100%;display:block;border-radius:3px}
+.polaroid .cap{text-align:center;font-size:15px;padding-top:11px;color:var(--cocoa)}
+.polaroid.r1{transform:rotate(-2.4deg)}
+.polaroid.r2{transform:rotate(2deg)}
+.polaroid.r3{transform:rotate(-1.2deg)}
+.polaroid::before{
+  content:"";position:absolute;top:-12px;left:50%;transform:translateX(-50%) rotate(3deg);
+  width:84px;height:24px;border-radius:3px;
+  background:rgba(255,217,114,.8);
+  box-shadow:inset 0 0 6px rgba(255,255,255,.6);
+}
+.polaroid:nth-child(even)::before{background:rgba(255,143,171,.72);transform:translateX(-50%) rotate(-4deg)}
+
+/* 收尾按钮区 */
+.next-area{text-align:center;margin:40px 0}
+
+/* ---------- 结尾夜幕 ---------- */
+#ending{
+  position:relative;background:linear-gradient(180deg,var(--night) 0%,var(--night-deep) 100%);
+  color:#FFF3DC;padding:70px 0 90px;margin-top:50px;
+  border-top-left-radius:36px;border-top-right-radius:36px;overflow:hidden;
+}
+#ending .section{position:relative;z-index:2}
+#stars,#fxCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+#ending h2{text-align:center;font-size:26px;margin-bottom:8px}
+#ending .lead{text-align:center;font-size:15px;color:#CDC6F2;margin-bottom:34px}
+.distance{
+  position:relative;background:rgba(255,255,255,.06);border:2px dashed rgba(255,233,160,.5);
+  border-radius:22px;padding:30px 18px 24px;margin-bottom:36px;
+}
+.cities{display:flex;justify-content:space-between;align-items:flex-end}
+.city{text-align:center;width:90px}
+.city .ico{font-size:34px;display:block;margin-bottom:6px}
+.city .nm{font-size:15px}
+.city .who{font-size:13px;color:#CDC6F2}
+.arc{position:absolute;left:90px;right:90px;top:34px;height:60px}
+.arc svg{width:100%;height:100%;overflow:visible}
+.arc path{fill:none;stroke:var(--star);stroke-width:2.5;stroke-dasharray:6 8;animation:dashmove 1.6s linear infinite}
+@keyframes dashmove{to{stroke-dashoffset:-28}}
+.plane{position:absolute;font-size:24px;left:0;top:0;animation:fly 5s ease-in-out infinite}
+@keyframes fly{
+  0%{transform:translate(-6px,46px) rotate(8deg)}
+  50%{transform:translate(calc(50vw - 130px),-8px) rotate(0deg)}
+  100%{transform:translate(calc(100vw - 230px),46px) rotate(-10deg)}
+}
+.km{text-align:center;margin-top:14px;font-size:16px}
+.km b{color:var(--star);font-size:22px}
+.lyric{text-align:center;font-size:19px;margin:10px 0 40px;line-height:1.9}
+.lyric .song{font-size:13px;color:#CDC6F2}
+
+/* 信 */
+#letterWrap{text-align:center}
+#letter{
+  display:none;text-align:left;background:#FFFDF4;color:var(--cocoa);
+  border-radius:14px;padding:30px 24px;margin-top:26px;
+  font-size:16.5px;line-height:2.15;white-space:pre-wrap;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);position:relative;
+}
+#letter::before{
+  content:"";position:absolute;top:-11px;left:50%;transform:translateX(-50%) rotate(-2deg);
+  width:96px;height:24px;background:rgba(255,143,171,.8);border-radius:3px;
+}
+#letter .cursor{display:inline-block;width:2px;height:1.1em;background:var(--pink-deep);vertical-align:-3px;animation:blink .8s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+#hugLine{display:none;margin-top:30px;font-size:17px;animation:pop .6s}
+
+/* 音乐按钮 */
+#bgmBtn{
+  position:fixed;top:14px;right:14px;z-index:90;
+  width:46px;height:46px;border-radius:50%;border:3px solid #fff;
+  background:var(--pink);color:#fff;font-size:20px;cursor:pointer;
+  box-shadow:0 4px 10px rgba(224,87,128,.4);
+  display:none;align-items:center;justify-content:center;
+}
+#bgmBtn.on{animation:spin 4s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* 提示 toast */
+#toast{
+  position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);
+  background:var(--cocoa);color:#fff;padding:11px 22px;border-radius:999px;
+  font-size:15px;opacity:0;transition:all .3s;z-index:95;pointer-events:none;
+  max-width:85vw;text-align:center;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* 飘落爱心粒子 */
+.pcle{position:fixed;z-index:80;pointer-events:none;font-size:22px;left:0;top:0;will-change:transform,opacity}
+
+/* 网易云原唱按钮 */
+.song-link{
+  display:inline-block;text-decoration:none;font-family:inherit;font-size:15px;
+  color:#FFF3DC;background:rgba(255,255,255,.08);
+  border:2px solid rgba(255,233,160,.55);border-radius:999px;
+  padding:9px 22px;transition:background .2s, transform .12s;
+}
+.song-link:active{transform:scale(.95)}
+.song-link:hover{background:rgba(255,233,160,.18)}
+</style>
+</head>
+<body>
+
+<!-- 🔒 密码锁 -->
+<div id="lock">
+  <div class="envelope">💌</div>
+  <h1>小玉大王 请查收</h1>
+  <div class="hint">提示：我们在一起的那一天 💗</div>
+  <div class="dots" id="dots">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+  <div class="pad" id="pad">
+    <button class="key">1</button><button class="key">2</button><button class="key">3</button>
+    <button class="key">4</button><button class="key">5</button><button class="key">6</button>
+    <button class="key">7</button><button class="key">8</button><button class="key">9</button>
+    <button class="key fn" data-k="none"></button><button class="key">0</button><button class="key fn" data-k="del">⌫</button>
+  </div>
+</div>
+
+<button id="bgmBtn" title="音乐">🎵</button>
+<audio id="bgm" src="song.mp3" loop preload="auto"></audio>
+<div id="toast"></div>
+
+<!-- 🎀 开屏 -->
+<main id="app" class="hidden">
+  <section id="hero">
+    <span class="sticker">2026.03.07 → 永远</span>
+    <div class="names">小玉大王 <span class="heart">💗</span> 泡泡</div>
+    <div class="day-card">
+      <div class="label">今天是我们在一起的</div>
+      <div><span class="num" id="dayNum">100</span></div>
+      <div class="unit">天</div>
+    </div>
+    <span class="sticker hidden" id="day100badge">🎉 我们在一起 100 天啦 💯</span>
+    <p class="sub">这里藏着我们这100天的故事，<br>不过想看的话——先答对泡泡出的题哦，贼精呢～</p>
+    <button class="btn" id="startBtn">开启我们的回忆 ➜</button>
+  </section>
+
+  <!-- 📖 故事流 -->
+  <div id="story" class="section">
+
+    <!-- Q1 -->
+    <div class="step quiz" data-q="0">
+      <span class="tag">第 1 关</span>
+      <h3>我们第一次见面，是在哪里？</h3>
+      <button class="opt" data-r="1">🧸 北京·五棵松 泡泡玛特门口</button>
+      <button class="opt">👕 三里屯 优衣库门口</button>
+      <button class="opt">🎢 环球影城 小黄人门口</button>
+      <div class="praise">答对啦！那天你先到的 🥹</div>
+    </div>
+
+    <!-- CH1 -->
+    <div class="step chapter">
+      <div class="ch-head">
+        <div class="date">2026.03.05 · 北京</div>
+        <h2>初遇 <span class="em">🧸</span></h2>
+      </div>
+      <div class="ch-text">五棵松，泡泡玛特门口。你先到的。我远远看见你的那一刻，心里只有一句话：这姑娘，真可爱。那天我们一个娃娃都没买，跑去吃了烤鱼——后来才知道，那顿烤鱼，是一切故事的开始。</div>
+      <div class="polaroid r1"><img src="img/meet.jpg" alt="初遇" loading="lazy"><div class="cap">被玩具包围，比玩具还可爱 🧸</div></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="step quiz" data-q="1">
+      <span class="tag">第 2 关</span>
+      <h3>我们第一次约会，吃的是什么？</h3>
+      <button class="opt">🍚 米村拌饭</button>
+      <button class="opt" data-r="1">🐟 辣尚瘾</button>
+      <button class="opt">🥓 西塔老太太</button>
+      <div class="praise">没错！泡泡请小玉大王吃鱼 🐟</div>
+    </div>
+
+    <!-- CH2 -->
+    <div class="step chapter">
+      <div class="ch-head">
+        <div class="date">2026.03.07 · 301医院</div>
+        <h2>在一起 <span class="em">💗</span></h2>
+      </div>
+      <div class="ch-text">两天之后，在301医院，我对你说：<br>「往后有了你，北京对我来说，才有了意义。」<br>我一开口你就答应了——果然贼精呢，肯定早就猜到了。<br>从这天起，<b>0307</b> 不只是密码，是我们的纪念日。</div>
+      <div class="polaroid r2"><img src="img/together.jpg" alt="牵手" loading="lazy"><div class="cap">牵手成功 ✌️ 此后都是我们</div></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="step quiz" data-q="2">
+      <span class="tag">第 3 关</span>
+      <h3>泡泡的口头禅是哪一句？</h3>
+      <button class="opt">「乖乖」</button>
+      <button class="opt">「吃了吗」</button>
+      <button class="opt" data-r="1">「贼精呢」</button>
+      <div class="praise">贼精呢！你果然贼精呢 😆</div>
+    </div>
+
+    <!-- CH3 -->
+    <div class="step chapter">
+      <div class="ch-head">
+        <div class="date">每一个普通的日子</div>
+        <h2>日常糖分 <span class="em">🍬</span></h2>
+      </div>
+      <div class="ch-text">我们互相叫对方「乖乖」。恋爱好像也没什么惊天动地，就是逛街、坐车、发呆这些小事，因为是和你，全都变成了糖。</div>
+      <div class="polaroid r1"><img src="img/lulu.jpg" alt="lululemon" loading="lazy"><div class="cap">3.29 · 你朋友圈许过的lululemon愿望，泡泡来实现 ✅</div></div>
+      <div class="polaroid r2"><img src="img/elephant.jpg" alt="小象" loading="lazy"><div class="cap">你从昆明带回来的小象，泡泡的第一份纪念品 🐘</div></div>
+      <div class="polaroid r3"><img src="img/sleep.jpg" alt="睡着" loading="lazy"><div class="cap">车上睡着的乖乖，怎么拍都可爱 😴</div></div>
+      <div class="polaroid r1"><img src="img/dress.jpg" alt="黑裙" loading="lazy"><div class="cap">随手一拍，就把泡泡惊艳到了 🖤</div></div>
+      <div class="polaroid r2"><img src="img/mirror.jpg" alt="镜子自拍" loading="lazy"><div class="cap">出片率100%的小玉大王 📸</div></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="step quiz" data-q="3">
+      <span class="tag">第 4 关</span>
+      <h3>那个周末在地坛公园，我们满园找的是谁的树？</h3>
+      <button class="opt">🌳 张杰的树</button>
+      <button class="opt" data-r="1">🌳 王俊凯的树</button>
+      <button class="opt">🌳 泡泡的树</button>
+      <div class="praise">对！全世界都知道你喜欢王俊凯了 😤</div>
+    </div>
+
+    <!-- CH4 -->
+    <div class="step chapter">
+      <div class="ch-head">
+        <div class="date">某个周末 · 地坛 × 什刹海</div>
+        <h2>周末漫游 <span class="em">☕</span></h2>
+      </div>
+      <div class="ch-text">先钻进地坛，陪你满园找王俊凯的那棵树；快天黑才晃到什刹海，点了一杯<b>巨难喝</b>的咖啡。咖啡很难喝，但身边的人很甜——扯平了。</div>
+      <div class="polaroid r3"><img src="img/shichahai.jpg" alt="什刹海" loading="lazy"><div class="cap">什刹海的晚霞，和叉腰的你 🌆</div></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="step quiz" data-q="4">
+      <span class="tag">第 5 关</span>
+      <h3>4.11鸟巢是张杰的演唱会，但小玉大王心里的 No.1 是？</h3>
+      <button class="opt">🎤 张杰</button>
+      <button class="opt" data-r="1">⭐ 王俊凯</button>
+      <button class="opt">🐟 当然是泡泡</button>
+      <div class="praise">哼，答对了…总有一天第三个选项会成真 😤</div>
+    </div>
+
+    <!-- CH5 -->
+    <div class="step chapter">
+      <div class="ch-head">
+        <div class="date">2026.04.11 · 鸟巢</div>
+        <h2>鸟巢的星星 <span class="em">⭐</span></h2>
+      </div>
+      <div class="ch-text">张杰的演唱会，整个鸟巢一起合唱。你脸上贴着小星星，挥着荧光棒——那天舞台的灯光再亮，也没有你亮。</div>
+      <div class="polaroid r2"><img src="img/concert.jpg" alt="演唱会" loading="lazy"><div class="cap">荧光棒已就位 🎤</div></div>
+      <div class="polaroid r1"><img src="img/selfie.jpg" alt="合照" loading="lazy"><div class="cap">贴着星星的我们 ⭐</div></div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="step quiz" data-q="5">
+      <span class="tag">最后一关</span>
+      <h3>威海环海路骑电动车、冷到发抖的时候，泡泡问了你什么离谱问题？</h3>
+      <button class="opt">「圆周率后十位是多少？」</button>
+      <button class="opt" data-r="1">「100以内的质数都有哪些？」</button>
+      <button class="opt">「晚饭吃什么？」</button>
+      <div class="praise">而且你真的开始背了！贼精呢 🤣</div>
+    </div>
+
+    <!-- CH6 -->
+    <div class="step chapter">
+      <div class="ch-head">
+        <div class="date">2026.05.02 · 威海 · 两天两夜</div>
+        <h2>海边的我们 <span class="em">🌊</span></h2>
+      </div>
+      <div class="ch-text">那香海拍了好多照片，捡了两个贝壳，一人一个。环海路上骑了三个多小时电动车，海风吹得两个人快冻僵了，却没有一个人甩脸色，一路都在笑。还有大虾、烧烤、炒饼和甜品店——和你在一起，吃什么都香。</div>
+      <div class="polaroid r1"><img src="img/meetyou.jpg" alt="那香海" loading="lazy"><div class="cap">路牌写着 meet you——多巧，我也遇见了你 💘</div></div>
+      <div class="polaroid r2"><img src="img/windmill.jpg" alt="风车" loading="lazy"><div class="cap">海边风车下，冻僵但快乐的我们 🌬️</div></div>
+      <div class="polaroid r3"><img src="img/shrimp.jpg" alt="大虾" loading="lazy"><div class="cap">怎么能少了大虾 🦐</div></div>
+      <div class="polaroid r1"><img src="img/bbq.jpg" alt="烧烤" loading="lazy"><div class="cap">烧烤+炒饼，安排上 🍢</div></div>
+      <div class="polaroid r2"><img src="img/icecream.jpg" alt="甜品店" loading="lazy"><div class="cap">甜品店门口比耶的乖乖 🍦</div></div>
+    </div>
+
+    <!-- 进入结尾 -->
+    <div class="step next-area" id="toEnding">
+      <p style="margin-bottom:18px;font-size:17px">故事讲到这里，还差最后一页…</p>
+      <button class="btn" id="endBtn">翻开最后一页 🌙</button>
+    </div>
+  </div>
+
+  <!-- 🌙 结尾 -->
+  <section id="ending" class="hidden">
+    <canvas id="stars"></canvas>
+    <canvas id="fxCanvas"></canvas>
+    <div class="section">
+      <h2>第 100 天的今夜 🌙</h2>
+      <p class="lead">2026.06.14 · 我们隔着六千公里</p>
+      <div class="distance">
+        <div class="arc">
+          <svg viewBox="0 0 100 60" preserveAspectRatio="none"><path d="M0,55 Q50,-15 100,55"/></svg>
+        </div>
+        <span class="plane">✈️</span>
+        <div class="cities">
+          <div class="city"><span class="ico">🏜️</span><span class="nm">沙特·利雅得</span><br><span class="who">泡泡在这里想你</span></div>
+          <div class="city"><span class="ico">🏯</span><span class="nm">中国·北京</span><br><span class="who">小玉大王在这里</span></div>
+        </div>
+        <div class="km">这一刻我们相隔 <b>6,600</b> 公里</div>
+      </div>
+      <div class="lyric">「多远都要在一起」<br><span class="song">—— 我们的歌 · G.E.M.邓紫棋 🎵</span></div>
+      <div style="text-align:center;margin:-22px 0 38px"><a class="song-link" href="https://music.163.com/#/search/m/?s=多远都要在一起 邓紫棋" target="_blank" rel="noopener">🎧 去听我们的原唱</a></div>
+      <div id="letterWrap">
+        <button class="btn" id="letterBtn">拆开泡泡写给你的信 💌</button>
+        <div id="letter"></div>
+        <button class="btn ghost hidden" id="hugBtn" style="margin-top:26px">抱抱泡泡 🫂</button>
+        <div id="hugLine">收到抱抱！等泡泡回北京，我们好好庆祝 🎂<br>第100天快乐，我的小玉大王 💗</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+/* ================= 工具 ================= */
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+function toast(msg){
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._tm); t._tm = setTimeout(()=>t.classList.remove('show'), 1800);
+}
+/* 表情粒子喷发 */
+function burst(x, y, emojis, n=14){
+  for(let i=0;i<n;i++){
+    const s = document.createElement('span');
+    s.className='pcle'; s.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    document.body.appendChild(s);
+    const a = Math.random()*Math.PI*2, d = 60+Math.random()*120;
+    s.animate([
+      {transform:`translate(${x}px,${y}px) scale(.6)`,opacity:1},
+      {transform:`translate(${x+Math.cos(a)*d}px,${y+Math.sin(a)*d-60}px) scale(${1+Math.random()})`,opacity:0}
+    ],{duration:900+Math.random()*500,easing:'cubic-bezier(.2,.7,.3,1)'}).onfinish=()=>s.remove();
+  }
+}
+
+/* ================= 音乐 ================= */
+const bgm = $('#bgm'), bgmBtn = $('#bgmBtn');
+// 移动端浏览器不一定触发 canplaythrough，按钮进门就显示，让用户始终有手动入口
+bgmBtn.style.display = 'flex';
+bgmBtn.addEventListener('click', ()=>{
+  if(bgm.paused){ bgm.play().then(()=>bgmBtn.classList.add('on')).catch(()=>{}); }
+  else{ bgm.pause(); bgmBtn.classList.remove('on'); }
+});
+
+/* ================= 密码锁 ================= */
+const PASS = '0307';
+let input = '';
+const dots = $$('#dots .dot');
+$('#pad').addEventListener('click', e=>{
+  const k = e.target.closest('.key'); if(!k) return;
+  if(k.dataset.k==='none') return;
+  if(k.dataset.k==='del'){ input = input.slice(0,-1); render(); return; }
+  if(input.length>=4) return;
+  input += k.textContent.trim(); render();
+  if(input.length===4) setTimeout(check, 200);
+});
+function render(){ dots.forEach((d,i)=>d.classList.toggle('fill', i<input.length)); }
+function check(){
+  if(input===PASS){
+    burst(innerWidth/2, innerHeight/2, ['💗','💘','🌟','🍓','🐟'], 22);
+    $('#lock').classList.add('open');
+    $('#app').classList.remove('hidden');
+    // 解锁这次点击是用户手势，趁机尝试自动播放（移动端拦截则保持静音，用户可点右上角按钮）
+    bgm.play().then(()=>bgmBtn.classList.add('on')).catch(()=>{});
+    setTimeout(()=>$('#lock').remove(), 700);
+  }else{
+    $('#dots').classList.add('shake');
+    toast(['再想想哦，贼精呢～','提示：三月的某一天 💗','乖乖再试一次嘛 🥺'][Math.floor(Math.random()*3)]);
+    setTimeout(()=>{ $('#dots').classList.remove('shake'); input=''; render(); }, 500);
+  }
+}
+
+/* ================= 恋爱天数（纪念定格版：永远停在第 100 天） ================= */
+(function(){
+  $('#dayNum').textContent = 100;
+  $('#day100badge').classList.remove('hidden');
+})();
+
+/* ================= 故事流 ================= */
+const steps = [...$$('#story .step')];
+steps.forEach(s=>s.style.display='none');
+let cursor = 0;
+function reveal(scroll=true){
+  if(cursor>=steps.length) return;
+  const el = steps[cursor];
+  el.style.display='';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.add('show')));
+  if(scroll) setTimeout(()=>el.scrollIntoView({behavior:'smooth', block: el.classList.contains('chapter')?'start':'center'}), 120);
+  cursor++;
+}
+$('#startBtn').addEventListener('click', ()=>{ if(cursor===0) reveal(); else steps[0].scrollIntoView({behavior:'smooth'}); });
+
+const WRONG = ['答错啦！罚你想泡泡一分钟 😤','不对哦，乖乖再想想 🥺','嗯？这都能忘？罚亲一口 😗'];
+$$('.quiz').forEach(q=>{
+  q.addEventListener('click', e=>{
+    const opt = e.target.closest('.opt');
+    if(!opt || q.classList.contains('done')) return;
+    if(opt.dataset.r==='1'){
+      opt.classList.add('right');
+      q.classList.add('done');
+      const r = opt.getBoundingClientRect();
+      burst(r.left+r.width/2, r.top, ['💗','🌟','✨'], 10);
+      setTimeout(()=>{ reveal(); setTimeout(()=>reveal(false), 600); }, 650);
+    }else{
+      opt.classList.add('wrong');
+      toast(WRONG[Math.floor(Math.random()*WRONG.length)]);
+      setTimeout(()=>opt.classList.remove('wrong'), 600);
+    }
+  });
+});
+
+/* ================= 结尾 ================= */
+$('#endBtn').addEventListener('click', ()=>{
+  $('#ending').classList.remove('hidden');
+  initStars(); startFireworks();
+  setTimeout(()=>$('#ending').scrollIntoView({behavior:'smooth'}), 100);
+});
+
+/* 星空 */
+function initStars(){
+  const c = $('#stars'), ctx = c.getContext('2d');
+  const resize = ()=>{ c.width = c.offsetWidth; c.height = c.offsetHeight; };
+  resize(); addEventListener('resize', resize);
+  const stars = Array.from({length:90}, ()=>({
+    x:Math.random(), y:Math.random(), r:Math.random()*1.6+.4, p:Math.random()*Math.PI*2
+  }));
+  (function draw(t){
+    ctx.clearRect(0,0,c.width,c.height);
+    stars.forEach(s=>{
+      const a = .35 + .6*Math.abs(Math.sin(t/900 + s.p));
+      ctx.globalAlpha = a; ctx.fillStyle = '#FFE9A0';
+      ctx.beginPath(); ctx.arc(s.x*c.width, s.y*c.height, s.r, 0, 7); ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(draw);
+  })(0);
+}
+
+/* 烟花 */
+function startFireworks(){
+  const c = $('#fxCanvas'), ctx = c.getContext('2d');
+  const resize = ()=>{ c.width = c.offsetWidth; c.height = c.offsetHeight; };
+  resize(); addEventListener('resize', resize);
+  let parts = [];
+  const COLORS = ['#FF8FAB','#FFD972','#A8D8B9','#9AD0FF','#E0B0FF','#FFF3DC'];
+  function launch(){
+    const x = c.width*(0.15+Math.random()*0.7), y = c.height*(0.12+Math.random()*0.4);
+    const col = COLORS[Math.floor(Math.random()*COLORS.length)];
+    for(let i=0;i<36;i++){
+      const a = Math.PI*2*i/36, v = 1.6+Math.random()*2.2;
+      parts.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,life:1,col});
+    }
+  }
+  setInterval(launch, 1500); launch();
+  (function tick(){
+    ctx.clearRect(0,0,c.width,c.height);
+    parts = parts.filter(p=>p.life>0);
+    parts.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy; p.vy+=.025; p.life-=.012;
+      ctx.globalAlpha = Math.max(p.life,0);
+      ctx.fillStyle = p.col;
+      ctx.beginPath(); ctx.arc(p.x,p.y,2.2,0,7); ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(tick);
+  })();
+}
+
+/* 打字机情书 */
+const LETTER = `亲爱的小玉大王：
+
+今天是我们在一起的第 100 天。
+抱歉这一天，泡泡在六千多公里外的沙特，
+不能牵着你的手，当面对你说这些话。
+
+谢谢你这 100 天里，
+对我不加保留的真诚。
+
+你在我身边时，你是一切；
+你不在我身边时，一切是你。
+每次看到你眼含爱意、欢快地扑进我怀里，
+我的灵魂都在那一刻归于平静——
+那时我才懂：
+往后有你，北京对我才有意义。
+
+100 以内有 25 个质数，
+而我的答案只有一个，是你。
+
+多远都要在一起。
+只愿君心似我心，定不负相思意。
+
+—— 永远爱你的 泡泡
+2026.06.14 · 我们的第 100 天`;
+
+$('#letterBtn').addEventListener('click', function(){
+  this.style.display='none';
+  const box = $('#letter'); box.style.display='block';
+  const cur = document.createElement('span'); cur.className='cursor';
+  box.appendChild(cur);
+  let i = 0;
+  (function type(){
+    if(i < LETTER.length){
+      cur.insertAdjacentText('beforebegin', LETTER[i++]);
+      if(i%40===0) box.scrollIntoView({behavior:'smooth', block:'end'});
+      setTimeout(type, LETTER[i-1]==='\n' ? 220 : 85);
+    }else{
+      cur.remove();
+      $('#hugBtn').classList.remove('hidden');
+      setTimeout(()=>$('#hugBtn').scrollIntoView({behavior:'smooth', block:'end'}), 300);
+    }
+  })();
+});
+
+$('#hugBtn').addEventListener('click', function(){
+  const r = this.getBoundingClientRect();
+  burst(r.left+r.width/2, r.top, ['🫂','💗','💘','🌟'], 24);
+  this.style.display='none';
+  $('#hugLine').style.display='block';
+});
+</script>
+</body>
+</html>
